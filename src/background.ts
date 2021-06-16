@@ -14,11 +14,11 @@ protocol.registerSchemesAsPrivileged([
   { scheme: "app", privileges: { secure: true, standard: true } },
 ]);
 // @ts-ignore
-//let win: BrowserWindow;
+let win: BrowserWindow;
 
 async function createWindow() {
   // Create the browser window.
-  const win = new BrowserWindow({
+   win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
@@ -27,7 +27,7 @@ async function createWindow() {
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION as unknown as boolean,
       contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION,
-      //preload: path.join(__dirname, "preload.js")
+      preload: path.join(__dirname, "preload.js")
     },
   });
 
@@ -90,32 +90,34 @@ if (isDevelopment) {
 }
 
 
+/*
 ipcMain.on('READ_FILE', (event, payload) => {
   const content = fs.readFileSync(payload.path);
   event.reply('READ_FILE', { content });
 });
+*/
 
-// ipcMain.on('select-dirs', async (event, arg) => {
-//   const result = await dialog.showOpenDialog(win, {
-//     properties: ['openDirectory']
-//   })
-//
-//   let tree = result.filePaths[0];
-//   event.reply('select-dirs', [dirTree(tree)] )
-//   // win.webContents.send("fromMain", [dirTree(tree)])
-//   console.log('directories selected', result.filePaths, dirTree(tree))
-// });
 
-function registerLocalResourceProtocol() {
-  protocol.registerFileProtocol('local-resource', (request, callback) => {
-    const url = request.url.replace(/^local-resource:\/\//, '')
-    // Decode URL to prevent errors when loading filenames with UTF-8 chars or chars like "#"
-    const decodedUrl = decodeURI(url) // Needed in case URL contains spaces
-    try {
-      return callback(decodedUrl)
-    }
-    catch (error) {
-      console.error('ERROR: registerLocalResourceProtocol: Could not get file path:', error)
-    }
+ipcMain.on('READ_FILE', (event, payload) => {
+  const content = fs.readFileSync(payload.path, 'utf-8');
+  event.reply('READ_FILE',  content );
+});
+
+ipcMain.on('WRITE_FILE', (event, payload) => {
+  console.log(payload)
+  let newContent = payload[0];
+   fs.writeFileSync(payload[1],  newContent, 'utf-8')
+});
+
+ipcMain.on('select-dirs', async (event, arg) => {
+  const result = await dialog.showOpenDialog(win, {
+    properties: ['openDirectory']
   })
-}
+  let tree = result.filePaths[0];
+  console.log(tree);
+  event.reply('select-dirs',  [tree ,dirTree(tree)]);
+})
+
+
+
+

@@ -1,17 +1,10 @@
 import Vue from "vue";
 import Vuetify from "vuetify/lib/framework";
 import VueNotification from "@kugatsu/vuenotification";
-const moment = require('moment')
-require('moment/locale/fr')
-
 Vue.use(VueNotification, {
     timer: 20
 });
 Vue.use(Vuetify);
-Vue.use(require('vue-moment'), {
-    moment
-});
-
 export default new Vuetify({
     theme: {
         themes: {
@@ -24,3 +17,4 @@ export default new Vuetify({
         dark: true
     },
 });
+//# sourceMappingURL=vuetify.js.map

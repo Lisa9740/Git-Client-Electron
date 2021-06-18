@@ -13,10 +13,15 @@
   },
   "main": "background.js",
   "dependencies": {
+    "@kugatsu/vuenotification": "^1.1.4",
     "core-js": "^3.6.5",
     "directory-tree": "^2.2.9",
+    "electron-store": "^8.0.0",
+    "gsap": "^3.7.0",
     "register-service-worker": "^1.7.1",
+    "simple-git": "^2.40.0",
     "vue": "^2.6.11",
+    "vue-moment": "^4.1.0",
     "vue-router": "^3.2.0",
     "vuetify": "^2.4.0",
     "vuex": "^3.4.0"

@@ -57,7 +57,7 @@ export default {
       window.api.send('ADD', selection);
       window.api.on('ADD',  (payload) => {
         console.log(payload)
-        this.$notification.new("test", {  timer: 1 });
+        this.$notification.new( payload[0].message, {  timer: 1 });
       });
 
     },

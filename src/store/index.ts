@@ -9,12 +9,16 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     treeFile :  [],
+    isGitProject : false,
     currentFileInfo : {},
     currentContentFile : {},
     statusGit : {},
     isEditable : false
   },
   mutations: {
+    isGitProject(state, data) {
+      state.isGitProject = data
+    },
     getTreeFile(state, data) {
         state.treeFile = data;
     },

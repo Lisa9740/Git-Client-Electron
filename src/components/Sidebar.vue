@@ -15,7 +15,8 @@
           <v-list-item-title>Accueil</v-list-item-title>
         </v-list-item>
         </router-link>
-        <router-link to="/commits">
+
+        <router-link to="/commits" v-if="$store.state.isGitProject">
           <v-list-item link>
             <v-list-item-icon>
               <v-icon>mdi-folder</v-icon>
@@ -23,7 +24,7 @@
            <v-list-item-title>Historique</v-list-item-title>
           </v-list-item>
         </router-link>
-        <router-link to="/status">
+        <router-link to="/status" v-if="$store.state.isGitProject">
           <v-list-item link>
             <v-list-item-icon>
               <v-icon>mdi-folder</v-icon>

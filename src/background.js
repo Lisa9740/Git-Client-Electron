@@ -71,7 +71,7 @@ app.on("ready", async () => {
     //registerLocalResourceProtocol()
     createWindow();
 });
-// Exit cleanly on request from parent process in development mode.
+// Exit cleanly on request from parent controllers in development mode.
 if (isDevelopment) {
     if (process.platform === "win32") {
         process.on("message", (data) => {

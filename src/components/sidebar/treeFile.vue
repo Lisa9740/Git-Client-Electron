@@ -66,7 +66,7 @@ export default {
         this.currentPath = this.currentFile.path;
 
         this.content = payload
-        this.defaultContent = payload
+        //this.defaultContent = payload
 
       });
     },

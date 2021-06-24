@@ -4,15 +4,10 @@ import { app, protocol, BrowserWindow, dialog,ipcMain } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
 const isDevelopment = process.env.NODE_ENV !== "production";
-const dirTree = require("directory-tree");
 
-// Import `SimpleGit` types and the default function exported from `simple-git`
-import simpleGit, {SimpleGit} from 'simple-git';
-import {asArray} from "simple-git/src/lib/utils";
-const git: SimpleGit = simpleGit();
-
-const fs = require('fs');
 const path = require("path");
+
+import {MainProcess} from "./controllers/main";
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -79,7 +74,7 @@ app.on("ready", async () => {
 });
 
 
-// Exit cleanly on request from parent process in development mode.
+// Exit cleanly on request from parent controllers in development mode.
 if (isDevelopment) {
   if (process.platform === "win32") {
     process.on("message", (data) => {
@@ -94,67 +89,10 @@ if (isDevelopment) {
   }
 }
 
+// @ts-ignore
+MainProcess.prototype.getProject(win);
 
-ipcMain.on('READ_FILE', (event, payload) => {
-  const content = fs.readFileSync(payload.path, 'utf-8');
-  event.reply('READ_FILE',  content );
-});
-
-ipcMain.on('WRITE_FILE', (event, payload) => {
-  console.log(payload)
-  let newContent = payload[0];
-   fs.writeFileSync(payload[1],  newContent, 'utf-8')
-});
-
-ipcMain.on('CHECK_STATUS',  async(event, payload) => {
- const git: SimpleGit = simpleGit(payload.path, { binary: 'git' });
- let test = await git.status()
-
-  event.reply('CHECK_STATUS',  test);
-});
-ipcMain.on('ADD',  async (event, payload) => {
-  const git: SimpleGit = simpleGit(payload.path, { binary: 'git' });
-  let result = await git.add(payload.file);
-  event.reply('ADD',  result);
-  //console.log(result, payload.message);
-});
-
-ipcMain.on('COMMIT',  async (event, payload) => {
-  const git: SimpleGit = simpleGit(payload.path, { binary: 'git' });
-  let result = await git.commit(payload.message ,payload.file, {'--author' : 'Lisa9740'});
-  event.reply('COMMIT',  result);
-  //console.log(result, payload.message);
-});
-
-ipcMain.on('LOG',  async (event, payload) => {
-  const git: SimpleGit = simpleGit(payload.path, { binary: 'git' });
-  let result = await git.log();
-  event.reply('LOG',  result);
-  console.log(result, payload.path);
-});
-
-
-ipcMain.on('PUSH',  async (event, payload) => {
-  const git: SimpleGit = simpleGit(payload.path, { binary: 'git' });
-  let result = await git.push();
-  event.reply('PUSH',  result);
-});
-
-ipcMain.on('DIFF_SUMMARY',  async (event, payload) => {
-  const git: SimpleGit = simpleGit(payload.path, { binary: 'git' });
-  let result = await git.diffSummary([]);
-  event.reply('DIFF_SUMMARY',  result);
-});
-
-ipcMain.on('select-dirs', async (event, arg) => {
-  const result = await dialog.showOpenDialog(win, {
-    properties: ['openDirectory']
-  })
-  let tree = result.filePaths[0];
-  console.log(tree);
-  event.reply('select-dirs',  [tree ,dirTree(tree)]);
-})
-
+MainProcess.prototype.getGitCommands();
 
 
 

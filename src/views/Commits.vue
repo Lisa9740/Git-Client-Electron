@@ -14,7 +14,7 @@
               :key="item.hash"
               cols="12"
           >
-            <ul class="mt-5" v-for="commit in item.all">
+            <ul class="mt-5" v-for="commit in item.all" :key="commit.hash">
               <li>
                 {{ commit.hash }}  -   {{ commit.message}}
                 <br>

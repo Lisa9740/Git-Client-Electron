@@ -40,7 +40,7 @@ export default {
         window.api.send('CHECK_STATUS', folder);
 
         window.api.on('CHECK_STATUS', (payload) => {
-          this.$store.commit('getStatusGit', payload)
+          this.$store.commit('getStatusGit', payload[0].data)
           this.status =  [this.$store.state.statusGit];
           console.log(this.status);
         });

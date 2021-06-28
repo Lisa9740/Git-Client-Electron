@@ -1,8 +1,10 @@
 <template>
   <v-navigation-drawer
+      v-model="$store.state.drawer"
       app
   >
-    <template class="mt-6">
+    <template class="mt-6"
+    >
       <v-list
           nav
           dense
@@ -49,6 +51,7 @@ export default {
     statusFile: [],
     currentPath: "",
     isOpened: false,
+    drawer: false,
     files: {
       html: 'mdi-language-html5',
       js: 'mdi-nodejs',
@@ -61,9 +64,6 @@ export default {
     },
   }),
   components: {TreeFile },
-  /*mounted() {
-    this.treeFiles = [this.$store.state.treeFile]
-  },*/
   methods: {
 
     openFile: function (selection){

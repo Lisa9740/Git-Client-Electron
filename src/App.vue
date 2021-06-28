@@ -3,6 +3,10 @@
     <Sidebar/>
     <v-app-bar app>
       <h1> Client GIT</h1>
+      <v-spacer></v-spacer>
+      <div v-if="$store.state.treeFile.length !== 0">
+        <v-btn color="red" class="text-center mr-0" v-on:click="closeProject">Fermer projet</v-btn>
+      </div>
 <!--      <v-app-bar-nav-icon @click.stop="/*drawer = !drawer*/"></v-app-bar-nav-icon>-->
     </v-app-bar>
     <v-main>
@@ -16,12 +20,17 @@
 
 <script>
 import Vue from "vue";
-import Files from "./views/File";
 import Sidebar from "@/components/Sidebar";
-import Commits from "@/views/Commits";
 
 export default Vue.extend({
   name: "App",
-  components: {Commits, Files, Sidebar},
+  components: {Sidebar},
+  methods: {
+    closeProject() {
+      this.$store.state.treeFile = [];
+      this.$store.commit('isGitProject', false);
+      this.$store.commit('openDrawer', false);
+    }
+  }
 });
 </script>

@@ -13,7 +13,10 @@ export default new Vuex.Store({
     currentFileInfo : {},
     currentContentFile : {},
     statusGit : {},
-    isEditable : false
+    isEditable : false,
+    drawer: false,
+    currentBranch: "",
+    branches: []
   },
   mutations: {
     isGitProject(state, data) {
@@ -33,8 +36,21 @@ export default new Vuex.Store({
     },
     isCurrentFileEditable(state, value){
       state.isEditable = value
+    },
+    openDrawer(state, value){
+      state.drawer = value
+    },
+    getBranches(state, value){
+      state.branches = value
+    },
+    getCurrentBranch(state, value){
+      state.currentBranch = value
     }
   },
-  actions: {},
+  actions: {
+    reloadProject(context){
+      context.commit("getTreeFile", [])
+    }
+  },
   modules: {},
 });

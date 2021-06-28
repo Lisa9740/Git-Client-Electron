@@ -1,16 +1,24 @@
 const { contextBridge, ipcRenderer } = require('electron');
 window.ipcRenderer = ipcRenderer
 const validChannels = [
+    'select-dirs',
     'READ_FILE',
     'WRITE_FILE',
-    'select-dirs',
     'CHECK_IS_GIT',
+    'INIT_GIT',
     'CHECK_STATUS',
-    'COMMIT',
+    'CHECK_BRANCH_STATUS',
+    'CHANGE_BRANCH',
+    'CURRENT_BRANCH',
+    'GET_REMOTE_INFO',
+    'FETCH',
+    'PULL',
     'LOG',
-    'PUSH',
     'ADD',
-    'DIFF_SUMMARY'
+    'COMMIT',
+    'PUSH',
+    'DIFF_SUMMARY',
+    'reload-project'
 ];
 contextBridge.exposeInMainWorld(
     "api", {

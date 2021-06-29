@@ -23,14 +23,6 @@ export class CommitController extends BaseHandler {
         });
     }
 
-    postCommit() {
-        ipcMain.on('COMMIT', async (event, payload) => {
-            const git: SimpleGit = simpleGit(payload.path, {binary: 'git'});
-            let result = await git.commit(payload.message, payload.file, {'--author': 'Lisa9740'});
-            event.reply('COMMIT', result);
-            //console.log(result, payload.message);
-        });
-    }
 
     getCommitHistory() {
         ipcMain.on('LOG', async (event, payload) => {

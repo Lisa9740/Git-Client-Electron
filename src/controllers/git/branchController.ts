@@ -3,33 +3,9 @@ import simpleGit, {SimpleGit} from 'simple-git';
 const git: SimpleGit = simpleGit();
 const fs = require('fs');
 
-class BaseHandler {
-    getGitStatus() { }
-    getBranchStatus() { }
-    isGitProject() { }
-    getStatusRemote() {}
-    changeBranch() {}
-}
 
-export class StatusController extends BaseHandler {
-    isGitProject() {
-        ipcMain.on('CHECK_IS_GIT', async (event, payload) => {
-            const git: SimpleGit = simpleGit(payload, {binary: 'git'});
-            try {
-                // @ts-ignore
-                let response = await git.checkIsRepo("root");
-                console.log(response);
-                if (response){
-                    event.reply('CHECK_IS_GIT', [{data: response, message: ''}]);
-                }
-
-            } catch (e) {
-                event.reply('CHECK_IS_GIT', [{data: false, message: 'Une erreur est survenue'}]);
-                console.log(e)
-            }
-        });
-    }
-    getBranchStatus() {
+export class BranchController {
+    getStatus() {
         ipcMain.on('CHECK_BRANCH_STATUS', async (event, payload) => {
             const git: SimpleGit = simpleGit(payload, {binary: 'git'});
             try {
@@ -78,34 +54,5 @@ export class StatusController extends BaseHandler {
 
         });
     }
-    getGitStatus() {
-        ipcMain.on('CHECK_STATUS', async (event, payload) => {
-            const git: SimpleGit = simpleGit(payload.path, {binary: 'git'});
-            try {
-                let test = await git.status();
 
-                event.reply('CHECK_STATUS', [{data: test, message: ''}]);
-                console.log(test);
-            } catch (e) {
-                event.reply('CHECK_STATUS', [{data: {}, message: 'Une erreur est survenue'}]);
-                console.log(e)
-            }
-        });
-    }
-    getStatusRemote() {
-        ipcMain.on('GET_REMOTE_INFO', async (event, payload) => {
-            const git: SimpleGit = simpleGit(payload, {binary: 'git'});
-            try {
-                let response = await git.remote(['-v']);
-                console.log(response);
-                if (response){
-                    event.reply('GET_REMOTE_INFO', [{data: response, message: ''}]);
-                }
-
-            } catch (e) {
-                event.reply('GET_REMOTE_INFO', [{data: "", message: 'Une erreur est survenue'}]);
-                console.log(e)
-            }
-        });
-    }
 }

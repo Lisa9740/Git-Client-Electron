@@ -1,8 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Files from "../views/File.vue";
-import NotAdded from "@/components/GitStatus/NotAdded.vue";
-import Modified from "@/components/GitStatus/Modified.vue";
+import Files from "../views/Project/File/FileView.vue";
+import NotAdded from "@/components/Git/Status/NotAddedFiles.vue";
+import Modified from "@/components/Git/Status/ModifiedFiles.vue";
 Vue.use(VueRouter);
 const routes = [
     {

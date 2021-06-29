@@ -42,7 +42,7 @@
 </template>
 <script>
 import Vue from "vue";
-import TreeFile from "@/components/sidebar/treeFile";
+import TreeFile from "@/components/Sidebar/Component/TreeFileExplorer";
 export default {
   name: "Sidebar",
   data: () => ({
@@ -70,8 +70,8 @@ export default {
       window.api.send('READ_FILE', selection );
 
       window.api.on('READ_FILE', (payload) => {
-        this.$store.commit('getFileInfo', selection);
-        this.$store.commit('getFileContent', payload);
+        this.$store.commit('setFileInfo', selection);
+        this.$store.commit('setFileContent', payload);
         console.log(payload)
         this.$store.commit('isCurrentFileEditable', false);
 

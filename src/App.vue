@@ -10,6 +10,7 @@
 <!--      <v-app-bar-nav-icon @click.stop="/*drawer = !drawer*/"></v-app-bar-nav-icon>-->
     </v-app-bar>
     <v-main>
+      <Notifications/>
       <v-container fluid>
          <router-view>
          </router-view>
@@ -20,11 +21,12 @@
 
 <script>
 import Vue from "vue";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/Sidebar/Sidebar";
+import Notifications from "@/components/Notifications";
 
 export default Vue.extend({
   name: "App",
-  components: {Sidebar},
+  components: {Sidebar, Notifications},
   methods: {
     closeProject() {
       this.$store.state.treeFile = [];

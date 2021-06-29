@@ -16,7 +16,7 @@
       </v-row>
     </v-alert>
     <div v-if="dialogGitShow">
-      Ajouter remote
+      <h3>Ajouter un remote GIT:</h3>
       <v-text-field label="Nom de la branche" v-model="name"></v-text-field>
       <v-text-field label="Repo" v-model="path"></v-text-field>
       <v-btn v-on:click="addRemote">Ajouter remote</v-btn>
@@ -36,7 +36,7 @@ export default {
     reloadProject(){
       window.api.send("reload-project", this.$store.state.treeFile.path)
       window.api.on("reload-project", (payload) => {
-        this.$store.commit("getTreeFile", payload )
+        this.$store.commit("setTreeFile", payload )
       })
     },
     addRemote: function (){
@@ -53,7 +53,7 @@ export default {
           this.dialogGitShow = false
           this.$store.commit('isGitProject', true);
           this.$notification.new( data[0].message);
-          //this.getBranchInfo()
+
           this.$emit("getBranchInfoRefresh", true)
           this.reloadProject()
         }

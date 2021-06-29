@@ -57,17 +57,13 @@ export default {
       window.api.send('READ_FILE', selection );
 
       window.api.on('READ_FILE', (payload) => {
-        this.$store.commit('getFileInfo', selection);
-        this.$store.commit('getFileContent', payload);
-        console.log(payload)
+        this.$store.commit('setFileInfo', selection);
+        this.$store.commit('setFileContent', payload);
+
         this.$store.commit('isCurrentFileEditable', false);
 
         this.currentFile = this.$store.state.currentFileInfo;
         this.currentPath = this.currentFile.path;
-
-        this.content = payload
-        //this.defaultContent = payload
-
       });
     },
   }

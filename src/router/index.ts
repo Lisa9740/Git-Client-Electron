@@ -1,11 +1,11 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import Files from "../views/File.vue";
-import NotAdded from "@/components/GitStatus/NotAdded.vue";
-import Modified from "@/components/GitStatus/Modified.vue";
-import Commits from "@/views/Commits.vue";
+import Files from "../views/Project/File/FileView.vue";
+import NotAdded from "@/components/Git/Status/NotAddedFiles.vue";
+import Modified from "@/components/Git/Status/ModifiedFiles.vue";
+import Commits from "@/views/Project/CommitHistory.vue";
 import Home from "@/views/Home.vue";
-import Status from "@/views/Status.vue";
+import Status from "@/views/Project/FilesStatus.vue";
 
 
 Vue.use(VueRouter);

@@ -16,41 +16,46 @@ export default new Vuex.Store({
     isEditable : false,
     drawer: false,
     currentBranch: "",
-    branches: []
+    branches: [],
+    message: "",
+    snackbar : false
   },
   mutations: {
+    openDrawer(state, value){
+      state.drawer = value
+    },
+
+    sendNotification(state, value){
+          state.snackbar = true
+          state.message = value
+    },
     isGitProject(state, data) {
       state.isGitProject = data
     },
-    getTreeFile(state, data) {
+    setTreeFile(state, data) {
         state.treeFile = data;
     },
     getStatusGit(state, data) {
       state.statusGit = data;
     },
-    getFileInfo(state, data){
+    setFileInfo(state, data){
       state.currentFileInfo = data
     },
-    getFileContent(state, data){
+    setFileContent(state, data){
       state.currentContentFile = data
     },
     isCurrentFileEditable(state, value){
       state.isEditable = value
     },
-    openDrawer(state, value){
-      state.drawer = value
-    },
-    getBranches(state, value){
+    setBranches(state, value){
       state.branches = value
     },
-    getCurrentBranch(state, value){
+    setCurrentBranch(state, value){
       state.currentBranch = value
     }
   },
   actions: {
-    reloadProject(context){
-      context.commit("getTreeFile", [])
-    }
+
   },
   modules: {},
 });

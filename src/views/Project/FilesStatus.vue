@@ -17,7 +17,7 @@
         </div>
 </template>
 <script>
-import Modified from "@/components/GitStatus/Modified";
+import Modified from "@/components/Git/Status/ModifiedFiles";
 
 export default {
   name: "Status",
@@ -38,7 +38,6 @@ export default {
 
       if (folder.path) {
         window.api.send('CHECK_STATUS', folder);
-
         window.api.on('CHECK_STATUS', (payload) => {
           this.$store.commit('getStatusGit', payload[0].data)
           this.status =  [this.$store.state.statusGit];

@@ -33,8 +33,10 @@ export class MainProcess extends BaseHandler {
         BranchController.prototype.changeBranch()
 
         DiffController.prototype.getDiffByFile()
+        DiffController.prototype.getDiffByCommit()
 
-        CommitController.prototype.getCommitHistory()
+        CommitController.prototype.getAllCommitHistory()
+        CommitController.prototype.getCommitHistoryByFile()
         CommitController.prototype.addFileBeforeCommit()
     }
 }

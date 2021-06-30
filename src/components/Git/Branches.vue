@@ -4,6 +4,7 @@
       <v-select
           v-model="currentBranch"
           :items="$store.state.branches"
+          prepend-inner-icon="mdi-source-branch"
           v-on:change="switchBranch"
           menu-props="auto"
           hint="Branche Actuelle"

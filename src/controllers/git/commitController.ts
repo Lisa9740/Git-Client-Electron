@@ -5,7 +5,7 @@ const git: SimpleGit = simpleGit();
 
 class BaseHandler {
     postCommit() { }
-    getCommitHistory() {}
+    getAllCommitHistory() {}
     addFileBeforeCommit() {}
 }
 
@@ -23,13 +23,20 @@ export class CommitController extends BaseHandler {
         });
     }
 
-
-    getCommitHistory() {
+    getAllCommitHistory() {
         ipcMain.on('LOG', async (event, payload) => {
             const git: SimpleGit = simpleGit(payload.path, {binary: 'git'});
             let result = await git.log();
             event.reply('LOG', result);
             console.log(result, payload.path);
+        });
+    }
+
+    getCommitHistoryByFile(){
+        ipcMain.on('SHOW_COMMIT_BY_FIlE',  async (event, payload) => {
+            const git: SimpleGit = simpleGit(payload.path, { binary: 'git' });
+            let result = await git.log(["--", payload.file]);
+            event.reply('SHOW_COMMIT_BY_FIlE',  result);
         });
     }
 }

@@ -12,7 +12,7 @@
         <router-link to="/">
         <v-list-item link>
           <v-list-item-icon>
-            <v-icon>mdi-account-multiple</v-icon>
+            <v-icon>mdi-home</v-icon>
           </v-list-item-icon>
           <v-list-item-title>Accueil</v-list-item-title>
         </v-list-item>
@@ -21,7 +21,7 @@
         <router-link to="/commits" v-if="$store.state.isGitProject">
           <v-list-item link>
             <v-list-item-icon>
-              <v-icon>mdi-folder</v-icon>
+              <v-icon>mdi-calendar-multiple</v-icon>
             </v-list-item-icon>
            <v-list-item-title>Historique</v-list-item-title>
           </v-list-item>
@@ -29,7 +29,7 @@
         <router-link to="/status" v-if="$store.state.isGitProject">
           <v-list-item link>
             <v-list-item-icon>
-              <v-icon>mdi-folder</v-icon>
+              <v-icon>mdi-git</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Status GIT</v-list-item-title>
           </v-list-item>
@@ -41,10 +41,10 @@
   </v-navigation-drawer>
 </template>
 <script>
-import Vue from "vue";
 import TreeFile from "@/components/Sidebar/Component/TreeFileExplorer";
 export default {
   name: "Sidebar",
+  components: {TreeFile },
   data: () => ({
     treeFiles: [],
     initiallyOpen: ['public'],
@@ -63,7 +63,6 @@ export default {
       xls: 'mdi-file-excel',
     },
   }),
-  components: {TreeFile },
   methods: {
 
     openFile: function (selection){

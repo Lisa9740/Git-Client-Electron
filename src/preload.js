@@ -17,6 +17,8 @@ const validChannels = [
     'ADD',
     'COMMIT',
     'PUSH',
+    'SHOW_COMMIT_BY_FIlE',
+    'SHOW_DIFF_BY_COMMIT',
     'DIFF_SUMMARY',
     'reload-project'
 ];

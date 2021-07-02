@@ -35,6 +35,7 @@ export class MainProcess extends BaseHandler {
         DiffController.prototype.getDiffByFile()
         DiffController.prototype.getDiffByCommit()
 
+
         CommitController.prototype.getAllCommitHistory()
         CommitController.prototype.getCommitHistoryByFile()
         CommitController.prototype.addFileBeforeCommit()

@@ -4,11 +4,18 @@
       <v-btn v-on:click="save(text)"><v-icon class="mr-3">mdi-content-save</v-icon> Enregistrer</v-btn>
       <v-btn color="red" absolute right v-on:click="cancelEditing">Annuler</v-btn>
     </v-row>
-    <v-textarea solo v-model="text" auto-grow></v-textarea>
+    <prism-editor class="my-editor" v-model="text" :highlight="highlighter" line-numbers></prism-editor>
+
   </div>
 </template>
 
 <script>
+import { PrismEditor } from 'vue-prism-editor';
+import 'vue-prism-editor/dist/prismeditor.min.css';
+import { highlight, languages } from 'prismjs/components/prism-core';
+import 'prismjs/components/prism-clike';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/themes/prism-tomorrow.css'; // import syntax highlighting styles
 export default {
   name: "EditFile",
   props: ['fileContent'],
@@ -18,7 +25,13 @@ export default {
   created() {
     this.text = this.fileContent
   },
+  components:{
+    PrismEditor
+  },
   methods: {
+    highlighter() {
+      return highlight(this.text, languages.js); //returns html
+    },
     updateThisContent(){
       let text = this.fileContent
       this.$emit("updateContent", text)

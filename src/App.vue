@@ -7,13 +7,13 @@
       <div v-if="$store.state.treeFile.length !== 0">
         <v-btn color="red" class="text-center mr-0" v-on:click="closeProject">Fermer projet</v-btn>
       </div>
-<!--      <v-app-bar-nav-icon @click.stop="/*drawer = !drawer*/"></v-app-bar-nav-icon>-->
+      <!--      <v-app-bar-nav-icon @click.stop="/*drawer = !drawer*/"></v-app-bar-nav-icon>-->
     </v-app-bar>
     <v-main>
       <Notifications/>
       <v-container fluid>
-         <router-view>
-         </router-view>
+        <router-view>
+        </router-view>
       </v-container>
     </v-main>
   </v-app>

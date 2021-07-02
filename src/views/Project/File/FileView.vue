@@ -15,7 +15,7 @@
 
     <div v-if="$store.state.currentContentFile">
       <div v-if="!$store.state.isEditable">
-        <v-textarea v-if="!$store.state.isEditable" disabled solo :value="$store.state.currentContentFile" auto-grow></v-textarea>
+        <prism-editor  v-if="!$store.state.isEditable"  class="my-editor" v-model="$store.state.currentContentFile" :highlight="highlighter" readonly line-numbers></prism-editor>
       </div>
       <div v-else>
          <EditFile :fileContent="$store.state.currentContentFile"/>
@@ -35,10 +35,16 @@ a {
 }
 </style>
 <script>
+import { PrismEditor } from 'vue-prism-editor';
+import 'vue-prism-editor/dist/prismeditor.min.css';
+import { highlight, languages } from 'prismjs/components/prism-core';
+import 'prismjs/components/prism-clike';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/themes/prism-tomorrow.css'; // import syntax highlighting styles
 import EditFile from "@/components/EditFile";
 export default {
   name: "Files",
-  components: {EditFile},
+  components: {EditFile, PrismEditor},
   data: () => ({
     dialog: false,
     isModified: false,
@@ -57,6 +63,9 @@ export default {
     //this.getDiffSummary()
   },
   methods: {
+    highlighter() {
+      return highlight(this.$store.state.currentContentFile, languages.js); //returns html
+    },
     setEditable() {
       this.$store.commit('isCurrentFileEditable', true);
     },

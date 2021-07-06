@@ -1,21 +1,25 @@
 <template>
 <div>
-  <v-container>
-    <v-row v-if="!$store.state.isEditable">
-      <v-btn v-on:click="setEditable"><v-icon class="mr-3">mdi-pencil</v-icon>Modifier</v-btn>
+  <v-container class="view-file-container" fluid>
+    <v-row class="mb-5" v-if="!$store.state.isEditable">
+      <v-btn v-on:click="setEditable" v-if="!$store.state.isEditable" class="mb-5"><v-icon class="mr-3">mdi-pencil</v-icon>Modifier</v-btn>
       <v-spacer></v-spacer>
       <router-link to="/history-commits-by-file">
         <v-btn>
-          <v-icon class="mr-3" >mdi-eye</v-icon>Historique
+          <v-icon class="mr-3">mdi-history</v-icon>COMMITS
         </v-btn>
       </router-link>
     </v-row>
 
-    <h1 v-if="$store.state.currentFileInfo.name" class="text-center">{{ $store.state.currentFileInfo.name}}</h1>
+    <h2 v-if="$store.state.currentFileInfo.name" class="text-center mb-6">{{ $store.state.currentFileInfo.name}} <br>
+      <span class="path-subtitle text-center">{{ $store.state.currentFileInfo.path }}</span>
+    </h2>
 
+
+    <v-divider></v-divider>
     <div v-if="$store.state.currentContentFile">
       <div v-if="!$store.state.isEditable">
-        <prism-editor  v-if="!$store.state.isEditable"  class="my-editor" v-model="$store.state.currentContentFile" :highlight="highlighter" readonly line-numbers></prism-editor>
+        <prism-editor class="my-editor" v-model="fileContentView" :highlight="highlighter" line-numbers readonly></prism-editor>
       </div>
       <div v-else>
          <EditFile :fileContent="$store.state.currentContentFile"/>
@@ -33,14 +37,36 @@
 a {
   text-decoration: none !important;
 }
+.path-subtitle{
+  text-align: center !important;
+  font-size: 14px;
+  font-weight: normal;
+}
+/* required class */
+.my-editor {
+  /* we dont use `language-` classes anymore so thats why we need to add background and text color manually */
+  background: #2d2d2d;
+  color: white;
+
+  /* you must provide font-family font-size line-height. Example: */
+  font-family: Fira code, Fira Mono, Consolas, Menlo, Courier, monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 5px;
+}
+.view-file-container{
+  padding: 25px;
+}
 </style>
 <script>
+// import Prism Editor
 import { PrismEditor } from 'vue-prism-editor';
-import 'vue-prism-editor/dist/prismeditor.min.css';
+import 'vue-prism-editor/dist/prismeditor.min.css'; // import the styles somewhere
 import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
-import 'prismjs/themes/prism-tomorrow.css'; // import syntax highlighting styles
+import 'prismjs/themes/prism-tomorrow.css'; //
+
 import EditFile from "@/components/EditFile";
 export default {
   name: "Files",
@@ -49,22 +75,24 @@ export default {
     dialog: false,
     isModified: false,
     isSaved: false,
-    file: "",
     modifiedFiles: [],
     status: [],
-    fileContent: '',
     contentSaved: '' ,
+    fileContent:'',
     selection: [],
     isOpened: false,
     path: null,
     message: "",
+    file: ''
   }),
-  created() {
-    //this.getDiffSummary()
+  computed: {
+    fileContentView: function (){
+      return "" + this.$store.state.currentContentFile
+    }
   },
   methods: {
-    highlighter() {
-      return highlight(this.$store.state.currentContentFile, languages.js); //returns html
+    highlighter(file) {
+      return highlight(file, languages.js); //returns html
     },
     setEditable() {
       this.$store.commit('isCurrentFileEditable', true);
@@ -93,15 +121,6 @@ export default {
 
       }
     },
-    showDiff(){
-       let data = {}
-       data.path = this.$store.state.treeFile.path
-       data.currentFile = this.$store.state.currentFileInfo.name
-        window.api.send('DIFF_SUMMARY', data);
-        window.api.on('DIFF_SUMMARY', (payload) => {
-          console.log(payload);
-       });
-    }
   }
 };
 </script>

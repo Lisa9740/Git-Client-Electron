@@ -2,8 +2,14 @@
   <v-app>
     <Sidebar/>
     <v-app-bar app>
-      <h1> Client GIT</h1>
+      <div v-if="$store.state.treeFile.name">
+        <h1>{{ $store.state.treeFile.name }}</h1>
+      </div>
+      <div v-else>
+        <h1> Client GIT</h1>
+      </div>
       <v-spacer></v-spacer>
+
       <div v-if="$store.state.treeFile.length !== 0">
         <v-btn color="red" class="text-center mr-0" v-on:click="closeProject">Fermer projet</v-btn>
       </div>

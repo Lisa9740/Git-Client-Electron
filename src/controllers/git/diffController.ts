@@ -18,21 +18,23 @@ export class DiffController {
     getDiffByCommit(){
         ipcMain.on('SHOW_DIFF_BY_COMMIT',  async (event, payload) => {
            const git: SimpleGit = simpleGit(payload.path, { binary: 'git' });
-            let status = await git.status()
-            console.log('diff ' + status)
-            if (status.files.length > 0){
-                let result = await git.stash().raw(["checkout", payload.hash, payload.file]).exec(() => {
-                    exec(`cat ${ payload.file }`, (err, stdout) =>{
-                        event.reply('SHOW_DIFF_BY_COMMIT', stdout)
-                    })
-                })
-            }else{
-                let result = await git.raw(["checkout", payload.hash, payload.file]).exec(() => {
-                    exec(`cat ${ payload.file }`, (err, stdout) =>{
-                        event.reply('SHOW_DIFF_BY_COMMIT', stdout)
-                    })
-                })
-            }
+           //let status = await git.status()
+            let result = await git.diff( [payload.hash, payload.file])
+            console.log(result)
+            event.reply('SHOW_DIFF_BY_COMMIT', result)
+            /*   if (status.files.length > 0){
+                   let result = await git.stash().raw(["checkout", payload.hash, payload.file]).exec(() => {
+                       exec(`cat ${ payload.file }`, (err, stdout) =>{
+                           event.reply('SHOW_DIFF_BY_COMMIT', stdout)
+                       })
+                   })
+               }else{
+                   let result = await git.raw(["checkout", payload.hash, payload.file]).exec(() => {
+                       exec(`cat ${ payload.file }`, (err, stdout) =>{
+                           event.reply('SHOW_DIFF_BY_COMMIT', stdout)
+                       })
+                   })
+               }*/
         });
     }
     resetState(){

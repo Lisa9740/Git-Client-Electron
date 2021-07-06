@@ -1,9 +1,9 @@
 <template>
   <div>
     <template>
-      <v-list-item class="mt-6">
+      <v-subheader>Fichiers du projet</v-subheader>
+      <v-list-item class="mt-2">
         <div v-if="$store.state.treeFile.length !== 0">
-          <h1>{{ $store.state.treeFile.name }}</h1>
           <v-treeview
               :open="initiallyOpen"
               :items="$store.state.treeFile.children"
@@ -11,7 +11,7 @@
           >
             <template slot="label" slot-scope="{ item }">
               <div v-if="item.type === 'file'">
-                <a  @click="openFile(item)"> <router-link to="/file">{{ item.name }}</router-link></a>
+                <a @click="openFile(item)"> <router-link to="/file">{{ item.name }}</router-link></a>
               </div>
               <div v-else>
                 {{ item.name }}

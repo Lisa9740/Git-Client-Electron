@@ -1,14 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
-//import Store from 'electron-store';
+//import PersistedState from 'vuex-electron-store';
 
 Vue.use(Vuex);
 
-//const persistentStore = new Store();
+//const persistentState = new Store();
 
 export default new Vuex.Store({
   state: {
-    treeFile :  [],
+    treeFile : [],
     isGitProject : false,
     currentFileInfo : {},
     currentContentFile : {},
@@ -20,11 +20,15 @@ export default new Vuex.Store({
     message: "",
     snackbar : false
   },
+ /* plugins: [
+    PersistedState.create({
+      paths: ['treeFile']
+    })
+  ],*/
   mutations: {
     openDrawer(state, value){
       state.drawer = value
     },
-
     sendNotification(state, value){
           state.snackbar = true
           state.message = value
@@ -33,7 +37,8 @@ export default new Vuex.Store({
       state.isGitProject = data
     },
     setTreeFile(state, data) {
-        state.treeFile = data;
+       state.treeFile = data;
+       //persistentStore.set('treeFile', state.treeFile);
     },
     getStatusGit(state, data) {
       state.statusGit = data;

@@ -34,7 +34,7 @@ const routes: Array<RouteConfig> = [
     component: FileHistory,
   },
   {
-    path: "/diff-by-file/:hash",
+    path: "/diff-by-file/:history",
     name: "FileDiff",
     component: FileDiff,
     props: true

@@ -5,9 +5,6 @@ Vue.use(VueNotification, {
     timer: 20
 });
 
-import { PrismEditor } from 'vue-prism-editor';
-import 'vue-prism-editor/dist/prismeditor.min.css'; // import the styles
-Vue.component('PrismEditor', PrismEditor);
 
 Vue.use(Vuetify);
 export default new Vuetify({
